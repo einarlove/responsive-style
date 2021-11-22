@@ -4,7 +4,12 @@ Functions that take a value or multiple values grouped by breakpoints, and retur
 
 This is utility functions that are designed to be used to create your reuseable components and are to be set up a few times.
 
-For the coming examples we'll be using the `css` function from the `@emotion/css` package. Examples of how to use it with other libraries are coming soon.
+#### Install
+```
+npm install responsive-style
+```
+
+For the coming examples we'll be using React the `css` function from the `@emotion/css` package. Examples of how to use it with other libraries will come later.
 
 ```tsx
 createResponsiveStyle('blue', => color => ({ color }))
@@ -168,54 +173,3 @@ export const Example = () => (
 
 <div class="gwe3w">Hello World!</div>
 ```
-
-</details>
-
-<hr />
-
-<details>
-<summary><strong>Margin & padding</strong></summary>
-
-```tsx
-import Box from './Box'
-
-export const Example = () => (
-  <Box
-    backgroundColor="magenta-20"
-    margin={[
-      { top: 20 },
-      {
-        700: {
-          top: 40,
-          bottom: 20,
-        },
-      },
-    ]}
-  />
-)
-```
-
-</details>
-<details>
-<summary><strong>Custom mapping</strong></summary>
-
-```tsx
-import Box from './Box'
-
-export const Example = () => (
-  <Box
-    backgroundColor="magenta-20"
-    margin={[
-      { top: 20 },
-      {
-        700: {
-          top: 40,
-          bottom: 20,
-        },
-      },
-    ]}
-  />
-)
-```
-
-</details>
