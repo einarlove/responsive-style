@@ -5,14 +5,13 @@ import { Options } from './types'
  * When provided with a key in options, it's added to each rule to make sure
  * they are unique when added on a object with other media queries.
  * @param mediaQuery Examples: '3em', '500', 500 and '@media (max-width: 500px)'
- * @param key A unique key that is added to the media query to prevent overwriting
+ * @param options A unique key that is added to the media query to prevent overwriting
  */
 export const mapMediaQuery = (
   mediaQuery: string | number,
-  key?: string | null,
   options?: Options
 ): string => {
-  const keyComment = key ? `/* ${key} */` : ''
+  const keyComment = options?.key ? `/* ${options.key} */` : ''
 
   // If the mediaQuery is a valid rule, return it with the key
   if (typeof mediaQuery === 'string' && mediaQuery.startsWith('@media')) {

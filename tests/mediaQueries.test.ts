@@ -35,7 +35,6 @@ test('Use max-width and descending order of media queries when useMaxWidthMediaQ
       },
     ] as ResponsiveStyle<number>,
     columnCount => ({ columnCount }),
-    undefined,
     { useMaxWidthMediaQueries: true }
   )
 

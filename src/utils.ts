@@ -7,10 +7,6 @@ import { ResponsiveStyle } from './types'
  * const [cssProperties, rest] = partitionCSSProperties(props, CSSProperties)
  * return <div className={css(createResponsiveCSSProperties(cssProperties))} {...rest} />
  */
-
-// type NonNullableObject<T> = {
-//   [P in keyof T]-?: Exclude<T[P], null | undefined>
-// }
 export function partitionCSSProperties<O extends Record<string, unknown>, P extends string[]>(
   object: O,
   properties: P

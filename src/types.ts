@@ -1,7 +1,11 @@
 import type { Properties } from 'csstype'
 
 export type Options = {
+  /** A unique key that is added to each media query to prevent overwriting anothers if merged into same object. */
+  key?: string
+  /** By default media queries are added as (min-width: {breakpint}px). Set useMaxWidthMediaQueries to true for max-width instead. */
   useMaxWidthMediaQueries?: boolean
+  /** Object with named breakpoints to be mapped. */
   breakpoints?: Record<string, Breakpoint>
 }
 

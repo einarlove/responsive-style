@@ -1,4 +1,4 @@
-import { createResponsiveStyle, ResponsiveStyle, px } from '../src'
+import { createResponsiveStyle, createResponsiveCSSProperties, px, ResponsiveStyle, ResponsiveCSSProperties } from '../src'
 
 test('Takes a style and returns two CSS declarations', () => {
   const cssObject = createResponsiveStyle(5, value => ({
@@ -27,7 +27,7 @@ test('Takes a style as array with multiple media queries and returns a CSS objec
     })
   )
 
-  expect(cssObject).toMatchObject({
+  expect(cssObject).toStrictEqual({
     marginTop: '20px',
     marginBottom: '40px',
     '@media (min-width: 700px)': {
@@ -38,7 +38,6 @@ test('Takes a style as array with multiple media queries and returns a CSS objec
     },
   })
 })
-
 
 test('Breakpoints should be sorted by their value, not their alpabetical name', () => {
   const breakpoints = { large: 1200, small: 800 }
@@ -55,7 +54,7 @@ test('Breakpoints should be sorted by their value, not their alpabetical name', 
     value => ({
       marginTop: px(value?.top),
       marginBottom: px(value?.bottom),
-    }), null, { breakpoints }
+    }), { breakpoints }
   )
 
   const expected = {
@@ -75,6 +74,23 @@ test('Breakpoints should be sorted by their value, not their alpabetical name', 
     },
   }
 
-  expect(cssObject).toMatchObject(expected)
+  expect(cssObject).toStrictEqual(expected)
   expect(Object.keys(cssObject)).toStrictEqual(Object.keys(expected))
+})
+
+test('createResponsiveCSSProperties returns a map of responsive CSS properties', () => {
+  const cssObject = {
+    overflow: 'hidden',
+    color: ['red', { 600: 'blue' }],
+  } as ResponsiveCSSProperties<'overflow' | 'color'>
+
+  const responsiveCSSProperties = createResponsiveCSSProperties(cssObject)
+
+  expect(responsiveCSSProperties).toStrictEqual({
+    overflow: 'hidden',
+    color: 'red',
+    '@media (min-width: 600px)/* color */': {
+      color: 'blue',
+    }
+  })
 })
