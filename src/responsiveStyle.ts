@@ -7,7 +7,7 @@ import {
   ResponsiveStyle,
   ResponsiveStyleMapper,
   StyleWithMediaQuery,
-  Options,
+  ResponsiveOptions,
 } from './types'
 
 /**
@@ -28,7 +28,7 @@ function cleanupMapper(cssObject: MutableCSSObject) {
 export function createResponsiveStyle<T>(
   style: ResponsiveStyle<T> | undefined,
   mapper: ResponsiveStyleMapper<T>,
-  options?: Options
+  options?: ResponsiveOptions
 ) {
   if (!Array.isArray(style)) return cleanupMapper(mapper(style)) as CSSObject
   const [initalValue, responsiveValues] = style as StyleWithMediaQuery<T>
@@ -50,7 +50,7 @@ export function createResponsiveStyle<T>(
  */
 export function createResponsiveCSSProperties(
   properties: Partial<Record<keyof Properties, ResponsiveStyle<string | number | undefined>>>,
-  options: Options = {}
+  options: ResponsiveOptions = {}
 ): CSSObject {
   return Object.entries(properties).reduce((total, [property, style]) => {
     return {

@@ -1,15 +1,15 @@
-import { Options } from './types'
+import { ResponsiveOptions, ResponsiveBreakpoint } from './types'
 
 /**
  * mapMediaQuery make sure that we always have a valid media query rule.
  * When provided with a key in options, it's added to each rule to make sure
  * they are unique when added on a object with other media queries.
- * @param mediaQuery Examples: '3em', '500', 500 and '@media (max-width: 500px)'
+ * @param mediaQuery Examples: '3em', '500', 500 or '@media (max-width: 500px)'
  * @param options A unique key that is added to the media query to prevent overwriting
  */
 export const mapMediaQuery = (
-  mediaQuery: string | number,
-  options?: Options
+  mediaQuery: ResponsiveBreakpoint,
+  options?: ResponsiveOptions
 ): string => {
   const keyComment = options?.key ? `/* ${options.key} */` : ''
 
@@ -37,7 +37,7 @@ export const mapMediaQuery = (
  * @todo Should order differently if useMaxWidthMediaQueries
  * @todo Implemented wrong since b is not used.
  */
-export const sortMediaQueries = (a: [string, unknown], b: [string, unknown], options?: Options) => {
+export const sortMediaQueries = (a: [string, unknown], b: [string, unknown], options?: ResponsiveOptions) => {
   const reverse = options?.useMaxWidthMediaQueries
   const left = options?.breakpoints?.[a[0]] || a[0]
   const right = options?.breakpoints?.[b[0]] || b[0]

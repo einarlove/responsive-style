@@ -1,12 +1,12 @@
 import type { Properties } from 'csstype'
 
-export type Options = {
+export type ResponsiveOptions = {
   /** A unique key that is added to each media query to prevent overwriting anothers if merged into same object. */
   key?: string
   /** By default media queries are added as (min-width: {breakpint}px). Set useMaxWidthMediaQueries to true for max-width instead. */
   useMaxWidthMediaQueries?: boolean
   /** Object with named breakpoints to be mapped. */
-  breakpoints?: Record<string, Breakpoint>
+  breakpoints?: Record<string, ResponsiveBreakpoint>
 }
 
 /**
@@ -14,7 +14,7 @@ export type Options = {
  * based on the option to useMaxWidthMediaQueries. Defaults to min-width.
  * Or it can be a string that gets used as a media query.
  */
-export type Breakpoint = string | number
+export type ResponsiveBreakpoint = string | number
 
 /**
  * CSSObject can contain all the known CSS properties with known values,
