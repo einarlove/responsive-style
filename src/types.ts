@@ -13,6 +13,7 @@ export type ResponsiveOptions = {
  * A breakpoint can either be a number that gets converted to a media query
  * based on the option to useMaxWidthMediaQueries. Defaults to min-width.
  * Or it can be a string that gets used as a media query.
+ * Has to include the '@media' keyword.
  */
 export type ResponsiveBreakpoint = string | number
 
