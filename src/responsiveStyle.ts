@@ -18,9 +18,15 @@ function cleanupMapper(cssObject: MutableCSSObject) {
   return cssObject
 }
 
+/**
+ *  Creates a responsive style that can be used to create a responsive style object
+ * @param style A style with or without media queries
+ * @param mapper A function that maps the style to a CSS object
+ * @param options Options for the responsive style
+ * @returns A CSS object with media queries if provided
+ */
 export function createResponsiveStyle<T>(
   style: ResponsiveStyle<T> | undefined,
-  /** Map the style to an CSS object */
   mapper: ResponsiveStyleMapper<T>,
   options?: Options
 ) {
