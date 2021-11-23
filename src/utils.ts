@@ -11,13 +11,13 @@ import { ResponsiveStyle } from './types'
 // type NonNullableObject<T> = {
 //   [P in keyof T]-?: Exclude<T[P], null | undefined>
 // }
-export function partitionCSSProperties<O extends Object, P extends readonly (keyof O)[]>(
+export function partitionCSSProperties<O extends Record<string, unknown>, P extends string[]>(
   object: O,
   properties: P
 ): [Pick<O, P[number]>, Omit<O, P[number]>] {
   return Object.keys(object).reduce(
     (partition, key) => {
-      const property = key as keyof O
+      const property = key as string
       const [pick, omit] = partition
       if (properties.includes(property)) {
         return [{ ...pick, [property]: object[property] }, omit]

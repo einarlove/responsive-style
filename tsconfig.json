@@ -15,5 +15,5 @@
     "experimentalDecorators": false,
     "emitDecoratorMetadata": false
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }

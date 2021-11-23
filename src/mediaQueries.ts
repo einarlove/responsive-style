@@ -9,7 +9,7 @@ import { Options } from './types'
  */
 export const mapMediaQuery = (
   mediaQuery: string | number,
-  key?: string,
+  key?: string | null,
   options?: Options
 ): string => {
   const keyComment = key ? `/* ${key} */` : ''

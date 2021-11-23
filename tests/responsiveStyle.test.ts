@@ -1,4 +1,4 @@
-import { createResponsiveStyle, ResponsiveStyle } from '../src'
+import { createResponsiveStyle, ResponsiveStyle, px } from '../src'
 
 test('Takes a style and returns two CSS declarations', () => {
   const cssObject = createResponsiveStyle(5, value => ({
@@ -22,12 +22,12 @@ test('Takes a style as array with multiple media queries and returns a CSS objec
       },
     ] as ResponsiveStyle<{ top?: number; bottom?: number }>,
     value => ({
-      marginTop: value.top ? value.top + 'px' : undefined,
-      marginBottom: value.bottom ? value.bottom + 'px' : undefined,
+      marginTop: px(value?.top),
+      marginBottom: px(value?.bottom),
     })
   )
 
-  expect(cssObject).toStrictEqual({
+  expect(cssObject).toMatchObject({
     marginTop: '20px',
     marginBottom: '40px',
     '@media (min-width: 700px)': {
@@ -37,4 +37,44 @@ test('Takes a style as array with multiple media queries and returns a CSS objec
       marginBottom: '50px',
     },
   })
+})
+
+
+test('Breakpoints should be sorted by their value, not their alpabetical name', () => {
+  const breakpoints = { large: 1200, small: 800 }
+  const cssObject = createResponsiveStyle(
+    [
+      { top: 20, bottom: 40 },
+      {
+        700: { top: 30 },
+        1000: { bottom: 50 },
+        large: { bottom: 60 },
+        small: { bottom: 45 },
+      },
+    ] as ResponsiveStyle<{ top?: number; bottom?: number }, keyof typeof breakpoints>,
+    value => ({
+      marginTop: px(value?.top),
+      marginBottom: px(value?.bottom),
+    }), null, { breakpoints }
+  )
+
+  const expected = {
+    marginTop: '20px',
+    marginBottom: '40px',
+    '@media (min-width: 700px)': {
+      marginTop: '30px',
+    },
+    '@media (min-width: 800px)': {
+      marginBottom: '45px',
+    },
+    '@media (min-width: 1000px)': {
+      marginBottom: '50px',
+    },
+    '@media (min-width: 1200px)': {
+      marginBottom: '60px',
+    },
+  }
+
+  expect(cssObject).toMatchObject(expected)
+  expect(Object.keys(cssObject)).toStrictEqual(Object.keys(expected))
 })

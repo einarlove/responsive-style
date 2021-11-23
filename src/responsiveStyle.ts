@@ -23,7 +23,7 @@ export function createResponsiveStyle<T>(
   /** Map the style to an CSS object */
   mapper: ResponsiveStyleMapper<T>,
   /** A unique key that is added to each media query to prevent overwriting anothers if merged into same object */
-  key?: string,
+  key?: string | null,
   options?: Options
 ) {
   if (!Array.isArray(style)) return cleanupMapper(mapper(style)) as CSSObject
