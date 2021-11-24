@@ -1,4 +1,10 @@
-import { createResponsiveStyle, createResponsiveCSSProperties, px, ResponsiveStyle, ResponsiveCSSProperties } from '../src'
+import {
+  createResponsiveStyle,
+  createResponsiveCSSProperties,
+  px,
+  ResponsiveStyle,
+  ResponsiveCSSProperties,
+} from '../src'
 
 test('Takes a style and returns two CSS declarations', () => {
   const cssObject = createResponsiveStyle(5, value => ({
@@ -54,7 +60,8 @@ test('Breakpoints should be sorted by their value, not their alpabetical name', 
     value => ({
       marginTop: px(value?.top),
       marginBottom: px(value?.bottom),
-    }), { breakpoints }
+    }),
+    { breakpoints }
   )
 
   const expected = {
@@ -91,6 +98,6 @@ test('createResponsiveCSSProperties returns a map of responsive CSS properties',
     color: 'red',
     '@media (min-width: 600px)/* color */': {
       color: 'blue',
-    }
+    },
   })
 })

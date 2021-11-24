@@ -7,7 +7,7 @@ import { ResponsiveStyle } from './types'
  * const [cssProperties, rest] = partitionCSSProperties(props, CSSProperties)
  * return <div className={css(createResponsiveCSSProperties(cssProperties))} {...rest} />
  */
- export function partitionCSSProperties<O extends Record<any, any>, P extends readonly string[]>(
+export function partitionCSSProperties<O extends Record<any, any>, P extends readonly string[]>(
   object: O,
   properties: P
 ): [Pick<O, P[number]>, Omit<O, P[number]>] {

@@ -55,7 +55,10 @@ export function createResponsiveCSSProperties(
   return Object.entries(properties).reduce((total, [property, style]) => {
     return {
       ...total,
-      ...createResponsiveStyle(style, value => ({ [property]: value }), {...options, key: property}),
+      ...createResponsiveStyle(style, value => ({ [property]: value }), {
+        ...options,
+        key: property,
+      }),
     }
   }, {})
 }

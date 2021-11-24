@@ -37,7 +37,11 @@ export const mapMediaQuery = (
  * @todo Should order differently if useMaxWidthMediaQueries
  * @todo Implemented wrong since b is not used.
  */
-export const sortMediaQueries = (a: [string, unknown], b: [string, unknown], options?: ResponsiveOptions) => {
+export const sortMediaQueries = (
+  a: [string, unknown],
+  b: [string, unknown],
+  options?: ResponsiveOptions
+) => {
   const reverse = options?.useMaxWidthMediaQueries
   const left = options?.breakpoints?.[a[0]] || a[0]
   const right = options?.breakpoints?.[b[0]] || b[0]
