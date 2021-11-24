@@ -42,6 +42,12 @@ export type StyleWithMediaQuery<T, B extends string | number = string> = [
 ]
 
 /**
+ * Function that accepts a ResponsiveStyle and returns the type it accepts regardless of
+ * if it was passed with media queries or not.
+ */
+export type extractResponsiveStyleType<R> = R extends ResponsiveStyle<infer T> ? T : never
+
+/**
  * ResponsiveCSSProps is used in pair with the helper function
  * createResponsiveCSSProps that accepts only known css properties and
  * returns a 1-to-1 mapping from value to css declaration.

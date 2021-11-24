@@ -5,6 +5,7 @@ Functions that take a value or multiple values grouped by breakpoints, and retur
 This is utility functions that are designed to be used to create your reuseable components and are to be set up a few times.
 
 #### Install
+
 ```
 npm install responsive-style
 ```
@@ -35,6 +36,16 @@ createResponsiveStyle(variant, value => ({
 }))
 ```
 
+If you want to combine multiple values, you can use the `responsiveStyles` function.
+
+```tsx
+createResponsiveStyles(
+  { color: v => themeColors[v], backgroundColor: v => themeColors[v] },
+  { color: 'red', backgroundColor: ['blue', { large: 'orange' }] },
+  { breakpoints: { large: 1200 } }
+)
+```
+
 ## Extractors
 
 Sometimes you want to allow a style like margin or padding to be expressed like:
@@ -49,12 +60,7 @@ Sometimes you want to allow a style like margin or padding to be expressed like:
 Create a reuseable mapping function that you use in your base components, or use the one provided with in this package.
 
 ```tsx
-import {
-  marginMapper,
-  paddingMapper,
-  borderMapper,
-  createResponsiveStyle
-} from 'responsive-style'
+import { marginMapper, paddingMapper, borderMapper, createResponsiveStyle } from 'responsive-style'
 createResponsiveStyle(margin, marginMapper)
 createResponsiveStyle(padding, paddingMapper)
 createResponsiveStyle(border, borderMapper)
@@ -65,7 +71,7 @@ createResponsiveStyle(border, borderMapper)
 Media queries can either be written manually:
 
 ```tsx
-[
+;[
   { color: 'black' },
   {
     '@media (min-width: 700px) and (prefers-color-scheme: dark)': {
@@ -95,21 +101,15 @@ const breakpoints = {
 }
 type Breakpoint = typeof breakpoints
 
-function Text({
-  color,
-}: {
-  color: ResponsiveStyle<keyof typeof themeColors, Breakpoints>
-}) {
+function Text({ color }: { color: ResponsiveStyle<keyof typeof themeColors, Breakpoints> }) {
   return (
     <div
-      className={css(
-        createResponsiveStyle(color, value => themeColors[value], { breakpoints }),
-      )}
+      className={css(createResponsiveStyle(color, value => themeColors[value], { breakpoints }))}
     />
   )
 }
 
-<Text color={['purple-20', { large: 'orange-20' }]} />
+;<Text color={['purple-20', { large: 'orange-20' }]} />
 ```
 
 ## Media query collisions
@@ -126,7 +126,9 @@ className={css({
 If both responsive styles include the same media query, only the last one will be included. Either:
 
 1. Pass a key as the third argument: `createResponsiveStyle(color, value => themeColors[value], 'color')`
-2. Create unique classnames or use a function provided by your styling library that resolves those conflicts:
+2. Use createResponsiveStyles to merge the styles together
+3. Create unique classnames or use a function provided by your styling library that resolves those conflicts:
+
 ```
   cs(css(createResponsiveStyle(display), createResponsiveStyle(textSize)))
 ```

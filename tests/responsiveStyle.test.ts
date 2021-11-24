@@ -1,10 +1,13 @@
+import { Properties } from 'csstype'
 import {
   createResponsiveStyle,
   createResponsiveCSSProperties,
   px,
   ResponsiveStyle,
   ResponsiveCSSProperties,
+  createResponsiveStyles,
 } from '../src'
+import { CSSObject } from '../src/types'
 
 test('Takes a style and returns two CSS declarations', () => {
   const cssObject = createResponsiveStyle(5, value => ({
@@ -15,6 +18,28 @@ test('Takes a style and returns two CSS declarations', () => {
   expect(cssObject).toStrictEqual({
     columnCount: 5,
     '--column-count': 5,
+  })
+})
+
+test('Pass multiple styles to createResponsiveStyles and get combined CSSObject', () => {
+  const cssObject = createResponsiveStyles(
+    {
+      color: value => ({ color: value }),
+      backgroundColor: value => ({ backgroundColor: value }),
+    },
+    { bogus: 4, color: 'red', backgroundColor: ['blue', { large: 'orange' }] } as {
+      backgroundColor: ResponsiveStyle<Properties['backgroundColor']>
+      color: ResponsiveStyle<Properties['color']>
+    },
+    { breakpoints: { large: 500 } }
+  )
+
+  expect(cssObject).toStrictEqual({
+    color: 'red',
+    backgroundColor: 'blue',
+    '@media (min-width: 500px)/* backgroundColor */': {
+      backgroundColor: 'orange',
+    },
   })
 })
 

@@ -8,6 +8,7 @@ import {
   ResponsiveStyleMapper,
   StyleWithMediaQuery,
   ResponsiveOptions,
+  extractResponsiveStyleType,
 } from './types'
 
 /**
@@ -45,8 +46,38 @@ export function createResponsiveStyle<T>(
 }
 
 /**
+ * @param mappers An object with keys that are the property names found in styles and values that are functions that map the property to a CSS object
+ * @param styles Responsive styles to be passed to the mappers. Properties not found in the mappers will be ignored.
+ * @param options Options for the responsive style. See documentation for createResponsiveStyle for more information.
+ * @returns A CSS object with media queries if provided
+ * @example
+ * createResponsiveStyles(
+ *   { color: v => themeColors[v], backgroundColor: v => themeColors[v] },
+ *   { color: 'red', backgroundColor: ['blue', { large: 'orange' }] },
+ *   { breakpoints: { large: 1200 } }
+ * )
+ */
+export function createResponsiveStyles<S extends Record<string, ResponsiveStyle<unknown>>>(
+  mappers: Record<keyof S, ResponsiveStyleMapper<extractResponsiveStyleType<S[keyof S]>>>,
+  styles: S,
+  options: Omit<ResponsiveOptions, 'key'> = {}
+) {
+  return Object.entries(mappers).reduce(
+    (acc, [key, mapper]) =>
+      Object.assign(
+        acc,
+        createResponsiveStyle(styles[key as keyof S], mapper as ResponsiveStyleMapper<S[keyof S]>, {
+          ...options,
+          key,
+        })
+      ),
+    {} as CSSObject
+  )
+}
+
+/**
  * createResponsiveCSSProperties accepts an object of only known CSS properties
- * with a simple 1-1 mapping to property and value.
+ * with a simple 1 to 1 mapping to property and value.
  */
 export function createResponsiveCSSProperties(
   properties: Partial<Record<keyof Properties, ResponsiveStyle<string | number | undefined>>>,

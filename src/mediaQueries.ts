@@ -33,10 +33,6 @@ export const mapMediaQuery = (
   return `@media (${ruleProperty}: ${mediaQuery})${keyComment}`
 }
 
-/**
- * @todo Should order differently if useMaxWidthMediaQueries
- * @todo Implemented wrong since b is not used.
- */
 export const sortMediaQueries = (
   a: [string, unknown],
   b: [string, unknown],

@@ -1,4 +1,8 @@
-export { createResponsiveStyle, createResponsiveCSSProperties } from './responsiveStyle'
+export {
+  createResponsiveStyle,
+  createResponsiveStyles,
+  createResponsiveCSSProperties,
+} from './responsiveStyle'
 export type {
   ResponsiveStyle,
   ResponsiveCSSProperties,
