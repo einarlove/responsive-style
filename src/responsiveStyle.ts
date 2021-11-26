@@ -58,7 +58,7 @@ export function createResponsiveStyle<T>(
  * )
  */
 export function createResponsiveStyles<S extends Record<string, ResponsiveStyle<unknown>>>(
-  mappers: Record<keyof S, ResponsiveStyleMapper<extractResponsiveStyleType<S[keyof S]>>>,
+  mappers: { [M in keyof S]: ResponsiveStyleMapper<extractResponsiveStyleType<S[M]>> },
   styles: S,
   options: Omit<ResponsiveOptions, 'key'> = {}
 ) {

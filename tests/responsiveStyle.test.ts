@@ -22,15 +22,23 @@ test('Takes a style and returns two CSS declarations', () => {
 })
 
 test('Pass multiple styles to createResponsiveStyles and get combined CSSObject', () => {
+  const properties = {
+    bogus: 4,
+    color: 'red',
+    hidden: false,
+    backgroundColor: ['blue', { large: 'orange' }],
+  } as {
+    backgroundColor: ResponsiveStyle<Properties['backgroundColor']>
+    color: ResponsiveStyle<Properties['color']>
+    hidden: ResponsiveStyle<boolean>
+  }
   const cssObject = createResponsiveStyles(
     {
       color: value => ({ color: value }),
       backgroundColor: value => ({ backgroundColor: value }),
+      hidden: value => ({ display: value ? 'none' : 'block' }),
     },
-    { bogus: 4, color: 'red', backgroundColor: ['blue', { large: 'orange' }] } as {
-      backgroundColor: ResponsiveStyle<Properties['backgroundColor']>
-      color: ResponsiveStyle<Properties['color']>
-    },
+    properties,
     { breakpoints: { large: 500 } }
   )
 
@@ -40,6 +48,7 @@ test('Pass multiple styles to createResponsiveStyles and get combined CSSObject'
     '@media (min-width: 500px)/* backgroundColor */': {
       backgroundColor: 'orange',
     },
+    display: 'block',
   })
 })
 
