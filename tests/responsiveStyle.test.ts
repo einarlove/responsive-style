@@ -33,12 +33,12 @@ test('Pass multiple styles to createResponsiveStyles and get combined CSSObject'
     hidden: ResponsiveStyle<boolean>
   }
   const cssObject = createResponsiveStyles(
+    properties,
     {
       color: value => ({ color: value }),
       backgroundColor: value => ({ backgroundColor: value }),
       hidden: value => ({ display: value ? 'none' : 'block' }),
     },
-    properties,
     { breakpoints: { large: 500 } }
   )
 
