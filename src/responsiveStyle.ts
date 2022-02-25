@@ -39,7 +39,7 @@ export function createResponsiveStyle<T>(
   const mediaQueries = {} as MediaQueries
 
   for (let [query, style] of sortedMediaQueries) {
-    if (style) mediaQueries[mapMediaQuery(query, options)] = cleanupMapper(mapper(style))
+    if (style !== undefined) mediaQueries[mapMediaQuery(query, options)] = cleanupMapper(mapper(style))
   }
 
   return { ...mapper(initalValue), ...mediaQueries } as CSSObject

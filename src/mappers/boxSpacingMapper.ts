@@ -18,6 +18,7 @@ const boxSpacingMapper = (
   type: 'margin' | 'padding',
   value: BoxSpacing | undefined
 ): Partial<Properties> => {
+  if (value === null) return {}
   if (typeof value === 'number') value = px(value)
   if (typeof value === 'undefined' || typeof value === 'string') return { [type]: value }
   return Object.entries(value).reduce((rule, [property, value]) => {

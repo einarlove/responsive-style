@@ -7,7 +7,6 @@ import {
   ResponsiveCSSProperties,
   createResponsiveStyles,
 } from '../src'
-import { CSSObject } from '../src/types'
 
 test('Takes a style and returns two CSS declarations', () => {
   const cssObject = createResponsiveStyle(5, value => ({
@@ -76,6 +75,27 @@ test('Takes a style as array with multiple media queries and returns a CSS objec
     '@media (min-width: 1000px)': {
       marginBottom: '50px',
     },
+  })
+})
+
+test('False and null values should not be ignored', () => {
+  const cssObject = createResponsiveStyle(
+    [false,
+      {
+        1: true,
+        2: false,
+        3: null,
+        4: undefined,
+      },
+    ] as ResponsiveStyle<boolean | null>,
+    value => ({ color: value ? 'blue' : 'red' })
+  )
+
+  expect(cssObject).toStrictEqual({
+    color: 'red',
+    '@media (min-width: 1px)': { color: 'blue' },
+    '@media (min-width: 2px)': { color: 'red' },
+    '@media (min-width: 3px)': { color: 'red' },
   })
 })
 
