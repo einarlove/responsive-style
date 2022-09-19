@@ -9,7 +9,7 @@ export type {
   ResponsiveBreakpoint,
   ResponsiveOptions,
 } from './types'
-export { partitionCSSProperties } from './utils'
+export { partitionCSSProperties, mapResponsiveStyle } from './utils'
 export { marginMapper, paddingMapper, Padding, Margin } from './mappers/boxSpacingMapper'
 export { borderMapper, Border } from './mappers/borderMapper'
 export { px } from './px'
